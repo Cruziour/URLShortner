@@ -1,7 +1,7 @@
 import { URL } from '../models/url.models.js'
 
 const handleServerSideRendering = async (req, res) => {
-    if(!req.user) return res.redirect('/login')
+    // if(!req.user) return res.redirect('/login')
     try {
         const allURL = await URL.find({ createdBy: req.user._id })
         if(!allURL) {
@@ -24,8 +24,25 @@ const handleLoginRender = (req, res) => {
     return res.render('login')
 }
 
+const handleAllUrl = async (req, res) => {
+    try {
+        const allURL = await URL.find({})
+        if(!allURL) {
+            return res.status(404).json({ error: "No URLs found." });
+        }
+        return res.status(200).render('home', {
+            urls: allURL
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: 'Server error in static router'
+        })
+    }
+}
+
 export {
     handleServerSideRendering,
     handleSignupRender,
-    handleLoginRender
+    handleLoginRender,
+    handleAllUrl
 }

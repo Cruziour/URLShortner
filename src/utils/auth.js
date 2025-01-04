@@ -18,7 +18,8 @@ import jwt from 'jsonwebtoken'
 const setUser = (user) => {
     const payload = {
         _id: user._id,
-        email: user.email
+        email: user.email,
+        role: user.role
     }
     return jwt.sign(payload, process.env.SECRET_KEY)
 }

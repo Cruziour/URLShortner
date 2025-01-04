@@ -33,7 +33,8 @@ const handleUserLogin = async (req, res) => {
     // return res.redirect('/')
 
     const token = setUser(user)
-    return res.json({ token })
+    res.cookie('token', token)
+    return res.redirect('/')
 }
 
 export {
